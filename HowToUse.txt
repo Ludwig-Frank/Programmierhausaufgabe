@@ -1,3 +1,5 @@
+SCROLL DOWN FOR ENGLISH VERSION
+
 Die folgenden Schritte beziehen sich auf ein Windows System. Da ich kein IOS Nutzer bin, könnte ich nicht verifizieren, ob die Schritte sich so auf IOS übertragen lassen.
 
 1. Klonen der Repository auf lokales System
@@ -5,8 +7,37 @@ Die folgenden Schritte beziehen sich auf ein Windows System. Da ich kein IOS Nut
 3. Zum Pfad des Projektes navigieren (in beiden Terminals)
 4. In Terminal 1 in das flask-server verzeichnis navigieren
 5. In Terminal 1 "./venv/Scripts/activate.ps1 ausführen
-6. In Terminal 1 "python3 server.py ausführen"
+6. In Terminal 1 "python server.py ausführen"
 7. in Terminal 2 in das client verzeichnis navigieren
 8. in Terminal 2 "npm start" ausführen
 
 Nach diesen Schritten sollte sich im Browser ein Fenster mit der Applikation öffnen. Um die daten in der API einsehen zu können im Browser nach folgender URL suchen : http://localhost:5001/data
+
+Für die Unittests: 
+1. Im Terminal zum flask-server Verzeichnis naviieren
+2- "./venv/Scripts/activate.ps1 ausführen
+3. "python unittests.py" ausführen. 
+
+
+ENGLISH VERSION
+
+The following steps refer to a Windows system. Since I am not an IOS user, I could not verify if the steps transfer to IOS like this.
+
+1. clone the repository to local system
+2. open 2 terminals
+3. navigate to the path of the project (in both terminals)
+4. in terminal 1 navigate to the flask-server directory
+5. in terminal 1 run "./venv/Scripts/activate.ps1
+6. in terminal 1 execute "python server.py
+7. in terminal 2 navigate to the client directory
+8. in terminal 2 execute "npm start
+
+After these steps, a window with the application should open in the browser. To view the data in the API in the browser search for the following URL : http://localhost:5001/data
+
+For the unittests: 
+1- Navigate to the flask-server directory in the terminal.
+2- Execute "./venv/Scripts/activate.ps1
+3. run "python unittests.py". 
+
+
+Translated with www.DeepL.com/Translator (free version)
