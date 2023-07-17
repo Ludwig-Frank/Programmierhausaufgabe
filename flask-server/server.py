@@ -6,6 +6,7 @@ from flask_cors import CORS
 #Standard Python Lib imports
 import threading
 import time
+import logging
 
 #Internal Imports
 import datainterface
@@ -24,24 +25,20 @@ app.config['SECRET_KEY'] = 'secret!'
 CORS(app,resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app,cors_allowed_origins="*", async_mode='threading')
 
+#activate logging
+logging.basicConfig(filename = 'Serverlog.log', level = logging.DEBUG)
 
-#internal functions for WebSocket
-def updateDataThread(updatedelay = 5):
-    while True:
-        b_isNewData = isNewData()
-        if b_isNewData != "Error" and b_isNewData:
-            uploadData()
-        time.sleep(updatedelay)
 
+#internal functions for WebSocket-Handshake
 @socketio.on("connect")
 def connected():
-    print(request.sid)
-    print("client has connected")
+    app.logger.info(request.sid)
+    app.logger.info("client has connected")
     emit("connect",f"user {request.sid} connected")
 
 @socketio.on("disconnect")
 def disconnected():
-    print("user disconnected")
+    app.logger.info("user disconnected")
     emit("disconnect",f"user {request.sid} disconnected")
 
 #internal Functions
@@ -52,9 +49,9 @@ def uploadData():
     if not data:
         pass
     else:
-        print("New Data is uploaded")
+        app.logger.info("New Data is uploaded")
         socketio.emit("newData",{"wordcountmap" : data})
-        return data
+        return {"wordcountmap" : data}
 
 def createWordCountMap():
     retVal = []
@@ -79,13 +76,21 @@ def isNewData():
     global latestDateData
     latestDateArticle = datainterface.getLatestArticleDate()
     if not latestDateArticle:
-        print("Received data is corrupted")
+        app.logger.info("Received data is corrupted")
         return False
     if latestDateArticle != latestDateData:
         latestDateData = latestDateArticle
         return True
     else:
         return False
+    
+def updateDataThread(updatedelay = 5):
+    while True:
+        b_isNewData = isNewData()
+        if b_isNewData != "Error" and b_isNewData:
+            uploadData()
+        time.sleep(updatedelay)
+
 
 # main
 if __name__ == '__main__':

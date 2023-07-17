@@ -1,11 +1,22 @@
 import "./App.css"
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import { io } from "socket.io-client";
 
 
 function App() {
 
 const [data, SetData] = useState([{}])
+
+useEffect(() =>{
+  fetch("/data").then(
+    res => res.json()
+  ).then(
+    data =>{
+      SetData(data)
+      console.log(data)
+    }
+  )
+  }, [])
 
 const socket = io("localhost:5001/", {
   transports: ["websocket"],
