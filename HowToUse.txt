@@ -1,0 +1,12 @@
+Die folgenden Schritte beziehen sich auf ein Windows System. Da ich kein IOS Nutzer bin, könnte ich nicht verifizieren, ob die Schritte sich so auf IOS übertragen lassen.
+
+1. Klonen der Repository auf lokales System
+2. 2 Terminals öffnen
+3. Zum Pfad des Projektes navigieren (in beiden Terminals)
+4. In Terminal 1 in das flask-server verzeichnis navigieren
+5. In Terminal 1 "./venv/Scripts/activate.ps1 ausführen
+6. In Terminal 1 "python3 server.py ausführen"
+7. in Terminal 2 in das client verzeichnis navigieren
+8. in Terminal 2 "npm start" ausführen
+
+Nach diesen Schritten sollte sich im Browser ein Fenster mit der Applikation öffnen. Um die daten in der API einsehen zu können im Browser nach folgender URL suchen : http://localhost:5001/data
