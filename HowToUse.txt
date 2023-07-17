@@ -39,5 +39,3 @@ For the unittests:
 2- Execute "./venv/Scripts/activate.ps1
 3. run "python unittests.py". 
 
-
-Translated with www.DeepL.com/Translator (free version)
