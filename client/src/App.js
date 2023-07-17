@@ -14,17 +14,17 @@ const socket = io("localhost:5001/", {
   },
 })
 
-socket.on("connect", () =>{
-  console.log("Connected")
+socket.on("connect", (data) =>{
+  console.log(data)
 })
 
-socket.on("disconnect", ()=>{
-console.log("Disconnected")
+socket.on("disconnect", (data)=>{
+console.log(data)
 })
 
-socket.on('newData',(data)=>{
-    SetData(data),
-    console.log(data)
+socket.on("newData",(data)=>{
+  console.log(data)  
+  SetData(data)
 })
 
 

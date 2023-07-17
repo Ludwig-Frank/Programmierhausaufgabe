@@ -1,12 +1,11 @@
 #External Imports
-from flask import Flask, request, jsonify
-from flask_socketio import SocketIO, emit, send
+from flask import Flask, request
+from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 
 #Standard Python Lib imports
 import threading
 import time
-import json
 
 #Internal Imports
 import datainterface
@@ -25,6 +24,7 @@ app.config['SECRET_KEY'] = 'secret!'
 CORS(app,resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app,cors_allowed_origins="*", async_mode='threading')
 
+
 #internal functions for WebSocket
 def updateDataThread(updatedelay = 5):
     while True:
@@ -37,14 +37,15 @@ def updateDataThread(updatedelay = 5):
 def connected():
     print(request.sid)
     print("client has connected")
-    #emit("connect",json.dumps({'data':f"id: {request.sid} is connected"}))
+    emit("connect",f"user {request.sid} connected")
 
 @socketio.on("disconnect")
 def disconnected():
     print("user disconnected")
-    #emit("disconnect",f"user {request.sid} disconnected")
+    emit("disconnect",f"user {request.sid} disconnected")
 
 #internal Functions
+@app.route("/data")
 def uploadData():
     global data
     data = createWordCountMap()
@@ -52,7 +53,8 @@ def uploadData():
         pass
     else:
         print("New Data is uploaded")
-        socketio.emit("newData",data)
+        socketio.emit("newData",{"wordcountmap" : data})
+        return data
 
 def createWordCountMap():
     retVal = []
@@ -90,4 +92,4 @@ if __name__ == '__main__':
     update_data_thread = threading.Thread(target=updateDataThread)
     update_data_thread.setDaemon(True)
     update_data_thread.start()
-    socketio.run(app, debug=False,port=5001)
+    socketio.run(app, debug=True,port=5001)
