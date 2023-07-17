@@ -73,5 +73,3 @@ Additional:
 Unittests for central functionality
 Server logging
 
-Translated with www.DeepL.com/Translator (free version)
-
