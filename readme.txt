@@ -35,4 +35,43 @@ Zusätzliches:
 Unittests für zentrale Funktionalität
 Server-Logging
 
+ENGLISH VERSION
+
+Hello,
+in this file I briefly go into what I have now implemented everything from the task how and how you can then test the application.
+
+Architecture:
+The project consists mainly of 2 components. The backend server and the fontend application. The server fetches the 
+Wordpress articles from the desired URL and processes them to the wordcountmap. Additionally, the server checks for new articles, processes them and sends them to the frontend application.
+
+The server is implemented with the Flask framework and launches a Flask app that sends the data to the frontend and provides an API. (Why the API is needed will be explained later).
+The server thereby establishes a handshake for the WebSocket and sends the data to be displayed over it. Additionally a daemon thread is started,
+which checks in parallel if new data is available. If this is the case, the data is requested and processed again.
+
+The frontend application receives the data sent by the server and displays it. For overview, the title of the article is displayed large and bold and below it is the
+Wordcountmap is displayed
+
+Problems: 
+Due to the combinatorics of eventlet, flask-socketio, requests and the threading, the data packets cannot be transferred via websocket. Thus the data is not updated without reloading.
+If you have any questions, I can go into this problem in more detail.
+I solved the problem by making the data available via the flask server API. The frontend now fetches them when starting the application.
+The current data can then be displayed by manually reloading.
+I still wanted to submit this version to show that I understood the basic concept of WebSockets and can use it. (The handshake works so far)
+
+Overview of acceptance criteria:
+1. the backend cyclically (every few seconds) retrieves the blog posts from the internate.org page (the page has been changed to www.thekey.academy by agreement) - FULFILLED
+2. the backend processes the blog posts to a simple word count map - FULFILLED
+3. the backend sends the map via WebSocket to the frontend after processing - theoretically FULFILLED, but the data is not received properly
+4. the frontend displays the new posts and refreshes itself on new data - NOT FULFILLED, the current data is only displayed when manually reloaded
+
+Bonus points:
+1. event driven processing - NO.
+2. page refreshes only on new data - WOULD be fulfilled if data was transferred correctly
+3. microservice architecture - Can't judge 100%. I would say partially
+
+Additional:
+Unittests for central functionality
+Server logging
+
+Translated with www.DeepL.com/Translator (free version)
 
